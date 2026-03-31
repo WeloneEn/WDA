@@ -65,7 +65,7 @@ export const Footer = () => {
                     <div className="flex animate-marquee items-center">
                         {[1, 2, 3, 4].map((i) => (
                             <span key={i} className="font-editorial italic text-[8vw] mx-6 md:mx-10 inline-block opacity-80">
-                                Открыты к сотрудничеству
+                                Бриф ➝ Концепт ➝ UI/UX ➝ Разработка ➝ Продукт ➝ Заявки
                                 <span className="inline-block mx-6 md:mx-10 text-[#D1D1C7]/20">—</span>
                             </span>
                         ))}
