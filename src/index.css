@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400&family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
 @source "../App.jsx";
 @source "../src/**/*.jsx";
 
@@ -48,11 +48,13 @@
 
   /* Типографическая заплатка для кириллической буквы Ц в курсиве */
   .tail-fix {
-    font-family: 'Times New Roman', 'Georgia', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
+    font-weight: 400;
     display: inline-block;
-    transform: translateY(1px) scaleX(1.05);
-    margin-right: 0.04em;
+    /* Убираем симуляцию через scale, Корморант идеален по контрасту */
+    transform: translateY(1px) scale(1.02);
+    margin-right: -0.01em; 
     margin-left: 0.01em;
   }
 
