@@ -1,0 +1,270 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+@source "../App.jsx";
+@source "../src/**/*.jsx";
+
+@theme {
+  --color-primary-red: #C24B31;
+  --color-paper: #D1D1C7;
+  --color-paper-dark: #C5C5BA;
+  --color-ink: #1A1A1A;
+  --font-editorial: 'Instrument Serif', serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+
+  /* ══════════════════════════════════════
+     ОСНОВА — тёплая переработанная бумага
+     ══════════════════════════════════════ */
+
+  html {
+    overflow-x: hidden;
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: #D1D1C7;
+    color: #1A1A1A;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    letter-spacing: normal;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ══════════════════════════════════════
+     СТРОГО 2 ШРИФТА — Instrument Serif + Inter
+     ══════════════════════════════════════ */
+
+  .font-editorial {
+    font-family: 'Instrument Serif', serif;
+    line-height: 1.15;
+    padding-bottom: 0.08em;
+  }
+
+  .reveal-text-wrap {
+    overflow: hidden;
+    padding-bottom: 0.15em;
+  }
+
+  h1, h2, h3 {
+    line-height: 1.15;
+    font-family: 'Instrument Serif', serif;
+  }
+
+  p, span, li {
+    line-height: 1.7;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* ══════════════════════════════════════
+     ТЕКСТУРА ГАЗЕТНОЙ БУМАГИ — настоящий grain
+     Два слоя: SVG noise + CSS для тактильности
+     ══════════════════════════════════════ */
+
+  .paper-grain::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.12;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 512px 512px;
+    mix-blend-mode: multiply;
+  }
+
+  /* Второй слой — мелкий grain для детализации */
+  .paper-grain::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 9998;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='0.8'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    mix-blend-mode: overlay;
+  }
+
+  /* ══════════════════════════════════════
+     СКРОЛЛБАР
+     ══════════════════════════════════════ */
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #D1D1C7;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(26, 26, 26, 0.2);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(26, 26, 26, 0.35);
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(26, 26, 26, 0.2) #D1D1C7;
+  }
+
+  /* ══════════════════════════════════════
+     ГАЗЕТА ПАДАЕТ НА СТОЛ 
+     ══════════════════════════════════════ */
+
+  @keyframes newspaperDrop {
+    0% {
+      transform: scale(1.06) translateY(-5vh);
+      opacity: 0.3;
+      filter: blur(3px);
+      box-shadow: 0 60px 120px rgba(0,0,0,0.3);
+    }
+    55% {
+      transform: scale(1.01) translateY(0.5vh);
+      opacity: 1;
+      filter: blur(0);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+    75% {
+      transform: scale(0.998) translateY(-0.15vh);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    100% {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      filter: blur(0);
+      box-shadow: none;
+    }
+  }
+  .newspaper-drop {
+    animation: newspaperDrop 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* ══════════════════════════════════════
+     MARQUEE
+     ══════════════════════════════════════ */
+
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee 20s linear infinite;
+  }
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  /* ══════════════════════════════════════
+     ГАЗЕТНЫЙ РАЗДЕЛИТЕЛЬ — dashed border как у Miranda
+     ══════════════════════════════════════ */
+
+  .border-newspaper {
+    border-color: #1A1A1A;
+  }
+
+  .border-dashed-newspaper {
+    border-style: dashed;
+    border-color: rgba(26, 26, 26, 0.25);
+    border-width: 1px;
+  }
+
+  /* ══════════════════════════════════════
+     COOKIE CRUMPLE
+     ══════════════════════════════════════ */
+
+  @keyframes crumple {
+    0% { transform: scale(1) rotate(0deg); opacity: 1; }
+    40% { transform: scale(0.6) rotate(-5deg); opacity: 0.8; }
+    100% { transform: scale(0.05) rotate(-15deg) translateY(60px); opacity: 0; }
+  }
+  .crumple-out {
+    animation: crumple 0.7s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+    pointer-events: none;
+  }
+
+  .torn-edge {
+    clip-path: polygon(
+      0% 2%, 3% 0%, 7% 3%, 11% 1%, 15% 2%, 20% 0%, 24% 3%, 28% 1%,
+      32% 2%, 37% 0%, 41% 3%, 45% 1%, 50% 2%, 55% 0%, 59% 3%, 63% 1%,
+      67% 2%, 72% 0%, 76% 3%, 80% 1%, 84% 2%, 88% 0%, 92% 2%, 96% 1%, 100% 2%,
+      100% 97%, 96% 100%, 92% 97%, 88% 100%, 84% 98%, 80% 100%, 76% 97%,
+      72% 100%, 67% 98%, 63% 100%, 59% 97%, 55% 100%, 50% 98%, 45% 100%,
+      41% 97%, 37% 100%, 32% 98%, 28% 100%, 24% 97%, 20% 100%, 15% 98%,
+      11% 100%, 7% 97%, 3% 100%, 0% 98%
+    );
+  }
+
+  /* ══════════════════════════════════════
+     PROJECT CARD IMAGE HOVER
+     ══════════════════════════════════════ */
+
+  .project-card-image {
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .group:hover .project-card-image {
+    transform: scale(1.04);
+  }
+
+  /* ══════════════════════════════════════
+     FLOATING CONTACT
+     ══════════════════════════════════════ */
+
+  .contact-float {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 9990;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.4s ease;
+  }
+  .contact-float:hover {
+    transform: scale(1.08);
+  }
+  @media (max-width: 768px) {
+    .contact-float {
+      bottom: 20px;
+      right: 20px;
+    }
+  }
+
+  /* ══════════════════════════════════════
+     ARCHIVE ROW HOVER
+     ══════════════════════════════════════ */
+
+  .archive-row {
+    position: relative;
+  }
+  .archive-row::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 0;
+    height: 2px;
+    background: #C24B31;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .archive-row:hover::after {
+    width: 100%;
+  }
+
+  /* ══════════════════════════════════════
+     SELECTION — цвета газеты
+     ══════════════════════════════════════ */
+
+  ::selection {
+    background-color: #1A1A1A;
+    color: #D1D1C7;
+  }
+}
