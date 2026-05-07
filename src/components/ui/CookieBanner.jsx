@@ -47,14 +47,14 @@ export const CookieBanner = () => {
 
                 {/* Заголовок в газетном стиле */}
                 <p className="font-editorial text-base md:text-lg italic text-[#111111] mb-1 leading-tight">
-                    Персональные данные
+                    Data Privacy
                 </p>
                 <div className="w-full h-[1px] bg-[#111111]/20 mb-3"></div>
 
                 <p className="text-[11px] text-[#111111]/70 leading-relaxed mb-5 font-sans">
-                    Мы используем файлы cookie для улучшения работы сайта в соответствии с 152-ФЗ.{' '}
+                    We use cookies to improve your experience on our site.{' '}
                     <a href="/privacy-policy" className="text-[#111111] underline underline-offset-2 decoration-[#111111]/30 hover:decoration-[#111111] transition-all">
-                        Политика конфиденциальности
+                        Privacy Policy
                     </a>
                 </p>
 
@@ -64,13 +64,13 @@ export const CookieBanner = () => {
                         onClick={() => dismiss('accepted')}
                         className="flex-1 py-2.5 bg-[#111111] text-[#f0ece1] text-[10px] font-sans font-bold tracking-[0.15em] uppercase border-2 border-[#111111] hover:bg-transparent hover:text-[#111111] transition-all duration-300 cursor-pointer"
                     >
-                        Принять ✓
+                        Accept ✓
                     </button>
                     <button
                         onClick={() => dismiss('rejected')}
                         className="flex-1 py-2.5 bg-transparent border-2 border-[#111111]/30 text-[#111111]/60 text-[10px] font-sans font-bold tracking-[0.15em] uppercase hover:border-[#111111] hover:text-[#111111] transition-all duration-300 cursor-pointer"
                     >
-                        Отклонить
+                        Decline
                     </button>
                 </div>
 

@@ -7,10 +7,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const SERVICES = [
-    { id: '01', title: 'Дизайн и брендинг', desc: 'Создаём визуальный образ, которому хочется доверять. Логотип, шрифты, цвета — всё работает как единая система.' },
-    { id: '02', title: 'Сайты и магазины', desc: 'От лаконичных визиток до полноценных интернет-магазинов. Красиво, быстро и удобно на любом устройстве.' },
-    { id: '03', title: 'Мобильная версия', desc: 'Больше половины людей заходят с телефона. Мы проектируем мобильную версию не «потом», а в первую очередь.' },
-    { id: '04', title: 'Поддержка и развитие', desc: 'После запуска мы не пропадаем. Помогаем развивать продукт, добавлять новые функции и следить за стабильностью.' }
+    { id: '01', title: 'Design & Branding', desc: 'We craft a visual identity that inspires trust. Logos, typography, and colors — everything works as a unified system.' },
+    { id: '02', title: 'Websites & Stores', desc: 'From sleek landing pages to full-scale e-commerce platforms. Beautiful, fast, and user-friendly on every device.' },
+    { id: '03', title: 'Mobile-First', desc: 'More than half of your users are on mobile. We design the mobile experience upfront, not as an afterthought.' },
+    { id: '04', title: 'Support & Growth', desc: 'We don’t disappear after launch. We help you scale the product, add new features, and maintain stability.' }
 ];
 
 export const Capabilities = () => {
@@ -19,30 +19,33 @@ export const Capabilities = () => {
     useEffect(() => {
         const section = sectionRef.current;
         if (!section) return;
+        const createdAnims = [];
         const rows = section.querySelectorAll('.capability-row');
         rows.forEach((row, idx) => {
-            gsap.fromTo(row, { y: 50, opacity: 0 }, {
+            const anim = gsap.fromTo(row, { y: 50, opacity: 0 }, {
                 y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', delay: idx * 0.08,
                 scrollTrigger: { trigger: row, start: 'top 88%', toggleActions: 'play none none none' },
             });
+            createdAnims.push(anim);
         });
         const numbers = section.querySelectorAll('.service-number');
         numbers.forEach((num) => {
-            gsap.fromTo(num, { scale: 0.5, opacity: 0 }, {
+            const anim = gsap.fromTo(num, { scale: 0.5, opacity: 0 }, {
                 scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.7)',
                 scrollTrigger: { trigger: num, start: 'top 90%', toggleActions: 'play none none none' },
             });
+            createdAnims.push(anim);
         });
-        return () => { ScrollTrigger.getAll().forEach(st => { if (st.trigger && section.contains(st.trigger)) st.kill(); }); };
+        return () => { createdAnims.forEach(a => { a.scrollTrigger?.kill(); a.kill(); }); };
     }, []);
 
     return (
         <section id="capabilities" className="py-16 md:py-28 px-6 md:px-10 relative z-20" ref={sectionRef}>
             <div className="max-w-[1400px] mx-auto">
                 <div className="mb-12 md:mb-20">
-                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#1A1A1A]/30 block mb-4">Что мы делаем</span>
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#1A1A1A]/30 block mb-4">What We Do</span>
                     <TextReveal as="h2" split="words" className="font-editorial text-4xl md:text-5xl lg:text-6xl italic text-[#1A1A1A] leading-[1.1]" stagger={0.06}>
-                        Наши возможности.
+                        Our capabilities.
                     </TextReveal>
                 </div>
                 <LineReveal thickness={1} color="rgba(26,26,26,0.15)" />

@@ -8,32 +8,34 @@ gsap.registerPlugin(ScrollTrigger);
 export const Principles = () => {
     const sectionRef = useRef(null);
     const principlesData = [
-        { num: '01', title: 'Качество', text: 'Пишем так, чтобы другой разработчик мог легко разобраться. Никаких «костылей» — только продуманные решения.' },
-        { num: '02', title: 'Внимание к деталям', text: 'Каждая кнопка, каждый отступ, каждая анимация — всё выверено. Интерфейс работает так же хорошо, как и выглядит.' },
-        { num: '03', title: 'Честность', text: 'Вы всегда знаете, на каком этапе проект. Понятные сроки, регулярные показы и открытое общение.' },
-        { num: '04', title: 'Скорость', text: 'Сайт должен открываться быстро. Мы оптимизируем всё — от изображений до кода.' }
+        { num: '01', title: 'Quality', text: 'We write code so another developer can easily understand it. No shortcuts — only thoughtful, robust solutions.' },
+        { num: '02', title: 'Attention to Detail', text: 'Every button, every margin, every animation — meticulously calibrated. The interface works exactly as well as it looks.' },
+        { num: '03', title: 'Transparency', text: 'You always know what stage the project is at. Clear deadlines, regular updates, and open communication.' },
+        { num: '04', title: 'Speed', text: 'A website must load fast. We optimize everything — from images to the underlying codebase.' }
     ];
 
     useEffect(() => {
         const section = sectionRef.current;
         if (!section) return;
+        const createdAnims = [];
         const cards = section.querySelectorAll('.principle-card');
         cards.forEach((card, idx) => {
-            gsap.fromTo(card, { y: 80, opacity: 0, rotateX: 8 }, {
+            const anim = gsap.fromTo(card, { y: 80, opacity: 0, rotateX: 8 }, {
                 y: 0, opacity: 1, rotateX: 0, duration: 1, ease: 'power3.out', delay: idx * 0.1,
                 scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none none' },
             });
+            createdAnims.push(anim);
         });
-        return () => { ScrollTrigger.getAll().forEach(st => { if (st.trigger && section.contains(st.trigger)) st.kill(); }); };
+        return () => { createdAnims.forEach(a => { a.scrollTrigger?.kill(); a.kill(); }); };
     }, []);
 
     return (
         <section className="py-16 md:py-28 px-6 md:px-10 relative z-20" ref={sectionRef}>
             <div className="max-w-[1400px] mx-auto">
                 <div className="mb-12 md:mb-20">
-                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#1A1A1A]/30 block mb-4">Принципы</span>
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#1A1A1A]/30 block mb-4">Principles</span>
                     <TextReveal as="h2" split="words" className="font-editorial text-4xl md:text-5xl lg:text-6xl italic text-[#1A1A1A] leading-[1.1]" stagger={0.06}>
-                        Как мы работаем.
+                        How we work.
                     </TextReveal>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-[#1A1A1A]/10">

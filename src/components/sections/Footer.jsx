@@ -10,9 +10,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const NAV_LINKS = [
-    { label: 'О нас', href: '#manifesto' },
-    { label: 'Проекты', href: '#projects' },
-    { label: 'Услуги', href: '#capabilities' },
+    { label: 'About', href: '#manifesto' },
+    { label: 'Projects', href: '#projects' },
+    { label: 'Services', href: '#capabilities' },
 ];
 
 export const Footer = () => {
@@ -32,11 +32,11 @@ export const Footer = () => {
         const el = footerRef.current;
         if (!el) return;
         const children = el.querySelectorAll('.footer-reveal');
-        gsap.fromTo(children, { y: 40, opacity: 0 }, {
+        const anims = gsap.fromTo(children, { y: 40, opacity: 0 }, {
             y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: 'power3.out',
             scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
         });
-        return () => { ScrollTrigger.getAll().forEach(st => { if (st.trigger === el) st.kill(); }); };
+        return () => { anims.scrollTrigger?.kill(); anims.kill(); };
     }, []);
 
     return (
@@ -45,14 +45,14 @@ export const Footer = () => {
             <section className="relative z-20 py-20 md:py-32 px-6 md:px-10 bg-[#D1D1C7]">
                 <div className="max-w-[1400px] mx-auto">
                     <LineReveal thickness={1} color="rgba(26,26,26,0.12)" className="mb-16 md:mb-24" />
-                    <p className="text-[10px] uppercase tracking-[0.25em] text-[#1A1A1A]/25 mb-6 text-center">Готовы обсудить проект?</p>
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-[#1A1A1A]/25 mb-6 text-center">Seeking a digital partner? — Let's converse.</p>
                     <MagneticElement strength={0.1} className="text-center">
                         <div className="cursor-pointer group" onClick={handleCopyEmail}>
                             <TextReveal as="h2" split="words" className="font-editorial text-[7vw] md:text-[5vw] lg:text-[4vw] italic text-[#1A1A1A] group-hover:text-[#C24B31] transition-colors duration-500 select-none" stagger={0.05}>
                                 {MY_INFO.email}
                             </TextReveal>
                             <p className={`mt-4 text-center text-xs tracking-[0.2em] uppercase transition-all duration-300 ${copied ? 'text-[#C24B31]' : 'text-[#1A1A1A]/20 group-hover:text-[#1A1A1A]/45'}`}>
-                                {copied ? (<><Check size={12} className="inline mr-2" />Скопировано!</>) : (<><Copy size={12} className="inline mr-2" />Нажмите, чтобы скопировать</>)}
+                                {copied ? (<><Check size={12} className="inline mr-2" />Copied!</>) : (<><Copy size={12} className="inline mr-2" />Click to copy</>)}
                             </p>
                         </div>
                     </MagneticElement>
@@ -65,7 +65,7 @@ export const Footer = () => {
                     <div className="flex animate-marquee items-center">
                         {[1, 2, 3, 4].map((i) => (
                             <span key={i} className="font-editorial italic text-[8vw] mx-6 md:mx-10 inline-block opacity-80">
-                                Бриф ➝ Кон<span className="tail-fix">ц</span>епт ➝ UI/UX ➝ Разработка ➝ Продукт ➝ Заявки
+                                Brief ➝ Concept ➝ UI/UX ➝ Development ➝ Launch ➝ Impact
                                 <span className="inline-block mx-6 md:mx-10 text-[#D1D1C7]/20">—</span>
                             </span>
                         ))}
@@ -80,21 +80,21 @@ export const Footer = () => {
                         <div>
                             <MagneticElement strength={0.2}>
                                 <a href={`mailto:${MY_INFO.email}`} className="group font-editorial text-3xl sm:text-4xl md:text-5xl italic text-[#1A1A1A] hover:text-[#C24B31] transition-colors duration-300 inline-flex items-center gap-3">
-                                    Связаться
+                                    Reach Out
                                     <ArrowUpRight size={24} className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-[#C24B31]" />
                                 </a>
                             </MagneticElement>
                         </div>
                         <div className="flex flex-col justify-end">
-                            <span className="text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A]/30 mb-2">Местоположение</span>
-                            <span className="font-editorial italic text-xl text-[#1A1A1A]/65">{MY_INFO.location || 'По всему миру'}</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A]/30 mb-2">Location</span>
+                            <span className="font-editorial italic text-xl text-[#1A1A1A]/65">{MY_INFO.location || 'Worldwide'}</span>
                         </div>
                     </div>
                     <LineReveal thickness={1} color="rgba(26,26,26,0.12)" />
                     <div className="pt-10">
                         <div className="footer-reveal grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
                             <div>
-                                <span className="text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A]/25 block mb-4">Навигация</span>
+                                <span className="text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A]/25 block mb-4">Navigation</span>
                                 <ul className="space-y-2.5">
                                     {NAV_LINKS.map((link, idx) => (
                                         <li key={idx}><a href={link.href} className="text-sm text-[#1A1A1A]/55 hover:text-[#C24B31] transition-colors duration-300">{link.label}</a></li>
@@ -102,7 +102,7 @@ export const Footer = () => {
                                 </ul>
                             </div>
                             <div>
-                                <span className="text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A]/25 block mb-4">Соцсети</span>
+                                <span className="text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A]/25 block mb-4">Socials</span>
                                 <ul className="space-y-2.5">
                                     {MY_INFO.socials.map((social, idx) => (
                                         <li key={idx}><a href={social.url} target="_blank" rel="noreferrer" className="text-sm text-[#1A1A1A]/55 hover:text-[#C24B31] transition-colors duration-300">{social.name} ↗</a></li>
@@ -110,22 +110,22 @@ export const Footer = () => {
                                 </ul>
                             </div>
                             <div>
-                                <span className="text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A]/25 block mb-4">Контакты</span>
+                                <span className="text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A]/25 block mb-4">Contact</span>
                                 <ul className="space-y-2.5">
                                     <li><a href={`mailto:${MY_INFO.email}`} className="text-sm text-[#1A1A1A]/55 hover:text-[#C24B31] transition-colors">{MY_INFO.email}</a></li>
                                 </ul>
                             </div>
                             <div>
-                                <span className="text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A]/25 block mb-4">Юридическое</span>
+                                <span className="text-[10px] uppercase tracking-[0.2em] text-[#1A1A1A]/25 block mb-4">Legal</span>
                                 <ul className="space-y-2.5">
-                                    <li className="text-sm text-[#1A1A1A]/25">Политика конфиденциальности</li>
+                                    <li><a href="/privacy-policy" className="text-sm text-[#1A1A1A]/25 hover:text-[#C24B31] transition-colors duration-300">Privacy Policy</a></li>
                                 </ul>
                             </div>
                         </div>
                         <LineReveal thickness={1} color="rgba(26,26,26,0.06)" />
                         <div className="footer-reveal flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-8">
                             <span className="text-xs text-[#1A1A1A]/20 tracking-wider">{currentYear} © {MY_INFO.name}</span>
-                            <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-xs text-[#1A1A1A]/20 tracking-wider hover:text-[#C24B31] transition-colors cursor-pointer bg-transparent border-none">↑ Наверх</button>
+                            <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-xs text-[#1A1A1A]/20 tracking-wider hover:text-[#C24B31] transition-colors cursor-pointer bg-transparent border-none">↑ Back to top</button>
                         </div>
                     </div>
                 </div>

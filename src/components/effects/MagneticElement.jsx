@@ -21,8 +21,7 @@ export const MagneticElement = ({
         const el = ref.current;
         if (!el) return;
 
-        // Only on desktop
-        if (window.innerWidth < 768) return;
+        let listenersAttached = false;
 
         const handleMouseMove = (e) => {
             const { clientX, clientY } = e;
@@ -50,12 +49,27 @@ export const MagneticElement = ({
             });
         };
 
-        el.addEventListener('mousemove', handleMouseMove);
-        el.addEventListener('mouseleave', handleMouseLeave);
+        const updateListeners = () => {
+            const isDesktop = window.innerWidth >= 768;
+            if (isDesktop && !listenersAttached) {
+                el.addEventListener('mousemove', handleMouseMove);
+                el.addEventListener('mouseleave', handleMouseLeave);
+                listenersAttached = true;
+            } else if (!isDesktop && listenersAttached) {
+                el.removeEventListener('mousemove', handleMouseMove);
+                el.removeEventListener('mouseleave', handleMouseLeave);
+                gsap.set(el, { x: 0, y: 0 });
+                listenersAttached = false;
+            }
+        };
+
+        updateListeners();
+        window.addEventListener('resize', updateListeners);
 
         return () => {
             el.removeEventListener('mousemove', handleMouseMove);
             el.removeEventListener('mouseleave', handleMouseLeave);
+            window.removeEventListener('resize', updateListeners);
         };
     }, [strength]);
 

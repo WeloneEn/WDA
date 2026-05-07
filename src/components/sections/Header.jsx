@@ -10,7 +10,7 @@ export const Header = ({ isScrolled, introPhase }) => {
                 {/* Left: Location */}
                 <MagneticElement strength={0.2} className="w-[120px] md:w-[180px]">
                     <span className="text-[11px] md:text-xs tracking-[0.05em] text-[#1A1A1A]/50">
-                        Россия, Мир
+                        Worldwide
                     </span>
                 </MagneticElement>
 
@@ -27,7 +27,7 @@ export const Header = ({ isScrolled, introPhase }) => {
                         href={`mailto:${MY_INFO.email}`}
                         className="text-[10px] md:text-[11px] uppercase tracking-[0.12em] text-[#1A1A1A]/50 hover:text-[#C24B31] transition-colors duration-300"
                     >
-                        Написать нам
+                        Contact Us
                     </a>
                 </MagneticElement>
             </div>
